@@ -50,24 +50,28 @@ wget -O debian.iso https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/de
    
    ![image](images/_00infity_booting-error.png)
 
-   Удачной попыткой установки была установка с графическим интерфейсом во время установки.
+   Удачной попыткой установки была установка с графическим интерфейсом.
 
     ![image](images/_01installation_window.png)
-
    
-   
-2. Установлена ОС Debian с параметрами:
+3. Установку Debian произвел со следующими параметрами: 
    - Имя компьютера: **debian**
    - Хостовое имя: **debian.localhost**
    - Имя пользователя: **user**
    - Пароль пользователя: **password**
 
+4. Во время устаановки на этапе Software Selection выбрал для установки только `standart system utilities`, то есть без графической оболочки и рабочего стола.
+
+    ![image](images/_00withoutgnome.png)
+
 ### Запуск виртуальной машины
-Перезагрузка виртуальной машины выполнена с командой:
+После установки, с помощью следующей команды запустил систему с виртуального жесткого диска debian.qcow2 с 2Gb RAM, 2 ядрами, создаю NAT-сеть и настраивает проброс портов, что позволяет подключиться к веб-серверу на ВМ через `http://localhost:1080`:
 ```sh
 qemu-system-x86_64 -hda debian.qcow2 -m 2G -smp 2 \
     -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::1080-:80,hostfwd=tcp::1022-:22
 ```
+
+    ![image](images/_00debian_first_lanch.png)
 
 ### Установка LAMP
 1. Переключение на суперпользователя:
