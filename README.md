@@ -150,13 +150,13 @@ qemu-system-x86_64 -hda debian.qcow2 -m 2G -smp 2 \
 
 ### Настройка базы данных
 
-   Создаю через командную строку для CMS базу данных drupal_db и пользователя базы данных с вашим именем!!!!!!!!!!!!
+   Создаю через командную строку для CMS базу данных drupal_db и пользователя базы данных с именем `daniil`
 
    ```sh
    mysql -u root
    CREATE DATABASE drupal_db;
-   CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';
-   GRANT ALL PRIVILEGES ON drupal_db.* TO 'user'@'localhost';
+   CREATE USER 'daniil'@'localhost' IDENTIFIED BY 'password';
+   GRANT ALL PRIVILEGES ON drupal_db.* TO 'daniil'@'localhost';
    FLUSH PRIVILEGES;
    EXIT;
    ```
