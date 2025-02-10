@@ -12,13 +12,13 @@
 ### Подготовка
 1. Скачиваю и устанавливаю MYSYS2
    
-    ![image](images/_00mysys2_installing.png)
+    ![image](images/_00mysys2_installing.jpg)
 
 2. Открываю MYSYS2 и создаю папка `lab01` командой `mkdir lab01`
 2. В папке `lab01` создаю папку `dvd` и файл `readme.md` командой `cat > readme.md`
 3. Открываю официальный сайт **Debian** и копирую ссылку на скачивание образа `64-bit PC DVD-1 iso`
    
-   ![image](images/_00download_dvd_iso.png)
+   ![image](images/_00download_dvd_iso.jpg)
 
 5. Захожу в папку dvd `(cd dvd)` и в консоли выполняю команду для скачивания файла 
 ```sh
@@ -33,7 +33,7 @@ wget -O debian.iso https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/de
    ```
 8. **QEMU** установлен.
    
-    ![image](images/_00qemu_is_installed.png)
+    ![image](images/_00qemu_is_installed.jpg)
 
 
 ### Установка ОС Debian на виртуальную машину
@@ -48,11 +48,11 @@ wget -O debian.iso https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/de
 
    Я пытался произвести установку Debian несколько раз. Несколько раз после установки у меня не получалось запустить систему из-за бесконечного запуска с диска
    
-   ![image](images/_00infity_booting-error.png)
+   ![image](images/_00infity_booting-error.jpg)
 
    Удачной попыткой установки была установка с графическим интерфейсом.
 
-    ![image](images/_01installation_window.png)
+    ![image](images/_01installation_window.jpg)
    
 3. Установку Debian произвел со следующими параметрами: 
    - Имя компьютера: **debian**
@@ -62,7 +62,7 @@ wget -O debian.iso https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/de
 
 4. Во время установки на этапе Software Selection выбрал для установки только `standart system utilities`, то есть без графической оболочки и рабочего стола.
 
-    ![image](images/_00withoutgnome.png)
+    ![image](images/_00withoutgnome.jpg)
 
 ### Запуск виртуальной машины
 После установки, с помощью следующей команды запустил систему с виртуального жесткого диска debian.qcow2 с 2Gb RAM, 2 ядрами, создаю NAT-сеть и настраивает проброс портов, что позволяет подключиться к веб-серверу на ВМ через `http://localhost:1080`:
@@ -71,7 +71,7 @@ qemu-system-x86_64 -hda debian.qcow2 -m 2G -smp 2 \
     -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::1080-:80,hostfwd=tcp::1022-:22
 ```
 
-![image](images/_00debian_first_lanch.png)
+![image](images/_00debian_first_lanch.jpg)
 
 ### Установка LAMP
 1. Переключение на суперпользователя:
@@ -79,7 +79,7 @@ qemu-system-x86_64 -hda debian.qcow2 -m 2G -smp 2 \
    su
    ```
    
-   ![image](images/_00debian_auth_su.png)
+   ![image](images/_00debian_auth_su.jpg)
    
 2. Во время попытки обновления списка пакетов и установки пакетов командами
    ```sh
@@ -90,7 +90,7 @@ qemu-system-x86_64 -hda debian.qcow2 -m 2G -smp 2 \
    ```
    я столкнулся с ошибками:
 
-   ![image](images/_00apt_update_error.png)
+   ![image](images/_00apt_update_error.jpg)
 
    Это было связано, с тем, что в файле по пути /etc/apt/sourses.list не было прописаны ссылки на репозитории, чтобы это решить я добавил в этот файл следующие ссылки:
    
@@ -133,14 +133,14 @@ qemu-system-x86_64 -hda debian.qcow2 -m 2G -smp 2 \
    ```sh
    ls -l
    ```
-   ![image](images/_00ls_drup_phpmy_zips.png)
+   ![image](images/_00ls_drup_phpmy_zips.jpg)
 3. Распаковка и перемещение файлов:
    ```sh
    unzip phpMyAdmin-5.2.2-all-languages.zip
    unzip drupal-11.1.1.zip
    ```
    
-   ![image](images/_00unzip_drup_phpmy.png)
+   ![image](images/_00unzip_drup_phpmy.jpg)
    
    ```sh
    mkdir /var/www
@@ -199,7 +199,7 @@ qemu-system-x86_64 -hda debian.qcow2 -m 2G -smp 2 \
    127.0.0.1 drupal.localhost
    ```
 
-   ![image](images/_00hosts.png)
+   ![image](images/_00hosts.jpg)
 
 ### Запуск и тестирование
 1. Проверяю версию системы:
@@ -207,7 +207,7 @@ qemu-system-x86_64 -hda debian.qcow2 -m 2G -smp 2 \
    uname -a
    ```
    
-   ![image](images/_00uname-a.png)
+   ![image](images/_00uname-a.jpg)
    
 3. Перезапускаю Apache:
    ```sh
@@ -217,57 +217,57 @@ qemu-system-x86_64 -hda debian.qcow2 -m 2G -smp 2 \
    - `http://drupal.localhost:1080`
    - `http://phpmyadmin.localhost:1080`
 
-  ![image](images/_00phpmyadmin_site.png)
+  ![image](images/_00phpmyadmin_site.jpg)
 
   
-  ![image](images/_00drupal_chooselang.png)
+  ![image](images/_00drupal_chooselang.jpg)
 
 5.Начинаю завершать установку drupal
 
-   ![image](images/_00drupal-chooseprofile.png)
+   ![image](images/_00drupal-chooseprofile.jpg)
 
-   ![image](images/_00drupal_req_problems1.png)
+   ![image](images/_00drupal_req_problems1.jpg)
    
    `Вижу, чтобы установить drupal, необходимо обновить php до 8.3 минимум.`
 
    `Проверяю версию php`
    
-   ![image](images/_00php8.2.png)
+   ![image](images/_00php8.2.jpg)
    
    `Нашел в интернете гайд, по обновлению php на Debian, и прописал все необходимые команды`
 
-   ![image](images/_00howtoupdatephp.png)
+   ![image](images/_00howtoupdatephp.jpg)
 
    `Проверил версию php и обновил в браузере сайт с drupal`
    
-   ![image](images/_00new_php8.3.png)
+   ![image](images/_00new_php8.3.jpg)
    
-   ![image](images/_00drupal_req_filesys.png)
+   ![image](images/_00drupal_req_filesys.jpg)
 
    `Теперь нужно создать директорию `site/default/site` и дать доступ к этой папке, сделал я это по гайду, который прилагается к drupal`
    
-   ![image](images/_00guid_to_resolve_req_filesys.png)
+   ![image](images/_00guid_to_resolve_req_filesys.jpg)
 
-   ![image](images/_00drupal_req_setting_files.png)
+   ![image](images/_00drupal_req_setting_files.jpg)
 
    `Далее следуя приложенному гайду, я решил проблему с settings files`
 
-   ![image](images/_00resolving_setting_files.png)
+   ![image](images/_00resolving_setting_files.jpg)
 
-   ![image](images/_00drupal_req_resolved.png)
+   ![image](images/_00drupal_req_resolved.jpg)
 
    `Все проблемы решены, теперь могу продолжить установку`
 
-   ![image](images/_00drupal_database_config_daniil.png)
-   ![image](images/_00installing_drupal.png)
+   ![image](images/_00drupal_database_config_daniil.jpg)
+   ![image](images/_00installing_drupal.jpg)
 
    `Заполняю информацию о сайте`
    
-   ![image](images/_00drupal_conf_site.png)
+   ![image](images/_00drupal_conf_site.jpg)
 
    `Drupal установлен`
    
-   ![image](images/_00drupal_is_installed.png)
+   ![image](images/_00drupal_is_installed.jpg)
    
 ## Ответы на вопросы
 1. **Как скачать файл с помощью wget?**
