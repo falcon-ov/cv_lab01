@@ -329,3 +329,11 @@ qemu-system-x86_64 -hda debian.qcow2 -m 2G -smp 2 \
 
 ## Вывод
 В ходе работы были освоены базовые принципы виртуализации, установка ОС, настройка веб-сервера и базы данных, развертывание CMS Drupal и PhpMyAdmin, а также базовая конфигурация виртуальных хостов Apache. В ходе лабораторной работы я изучил некоторые аспекты работы в ОС Debian, решал появившиеся проблемы по их поступлении
+
+## Библиография
+
+1. Официальный сайт Debian. [https://www.debian.org](https://www.debian.org)
+2. Официальный сайт MYSYS2 [https://www.msys2.org/](https://www.msys2.org/)
+3. Официальная документация QEMU. [https://www.qemu.org/documentation](https://www.qemu.org/documentation)  
+4. Гайд по обновлению php [https://php.watch/articles/php-8.3-install-upgrade-on-debian-ubuntu](https://php.watch/articles/php-8.3-install-upgrade-on-debian-ubuntu)
+5. Нейросеть ChatGPT [https://chatgpt.com/](https://chatgpt.com/)
