@@ -71,21 +71,60 @@ qemu-system-x86_64 -hda debian.qcow2 -m 2G -smp 2 \
     -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::1080-:80,hostfwd=tcp::1022-:22
 ```
 
-    ![image](images/_00debian_first_lanch.png)
+![image](images/_00debian_first_lanch.png)
 
 ### Установка LAMP
 1. Переключение на суперпользователя:
    ```sh
    su
    ```
-2. Обновление системы и установка пакетов:
+   
+   ![image](images/_00debian_auth_su.png)
+   
+2. Во время попытки обновления списка пакетов и установки пакетов командами
+   ```sh
+   apt update -y
+   ``` 
+   ```sh
+   apt install -y apache2 php libapache2-mod-php php-mysql mariadb-server mariadb-client unzip
+   ```
+   я столкнулся с ошибками:
+
+   ![image](images/_00apt_update_error.png)
+
+   Это было связано, с тем, что в файле по пути /etc/apt/sourses.list не было прописаны ссылки на репозитории, чтобы это решить я добавил в этот файл следующие ссылки:
+   
+   Прописал, чтобы начать редактировать файл
+   ```sh
+   nano /etc/apt/sourses.list
+   ```
+   
+   и добавил в него:
+   ```
+   deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
+   
+   deb  http://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
+   
+   deb http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
+   ```
+
+   После ввел команды, которые в это раз выполнились без ошибок
    ```sh
    apt update -y
    apt install -y apache2 php libapache2-mod-php php-mysql mariadb-server mariadb-client unzip
    ```
+   Вот краткое описание назначения установленных пакетов:
+
+   `apache2` — веб-сервер Apache.
+   `php` — интерпретатор PHP для выполнения PHP-скриптов.
+   `libapache2-mod-php` — модуль для Apache, позволяющий серверу обрабатывать PHP-код.
+   `php-mysql` — расширение PHP для работы с MySQL/MariaDB.
+   `mariadb-server` — сервер базы данных MariaDB (форк MySQL).
+   `mariadb-client` — клиент для взаимодействия с сервером MariaDB.
+   `unzip` — утилита для распаковки ZIP-архивов.
 
 ### Установка PhpMyAdmin и CMS Drupal
-1. Скачивание файлов:
+1. Скачал с помощью следующих команд PhpMyAdmin и CMS Drupal:
    ```sh
    wget https://files.phpmyadmin.net/phpMyAdmin/5.2.2/phpMyAdmin-5.2.2-all-languages.zip
    wget https://ftp.drupal.org/files/projects/drupal-11.1.1.zip
@@ -94,24 +133,33 @@ qemu-system-x86_64 -hda debian.qcow2 -m 2G -smp 2 \
    ```sh
    ls -l
    ```
+   ![image](images/_00ls_drup_phpmy_zips.png)
 3. Распаковка и перемещение файлов:
    ```sh
-   mkdir /var/www
    unzip phpMyAdmin-5.2.2-all-languages.zip
-   mv phpMyAdmin-5.2.2-all-languages /var/www/phpmyadmin
    unzip drupal-11.1.1.zip
+   ```
+   
+   `[image](images/_00unzip_drup_phpmy.png)
+   
+   ```sh
+   mkdir /var/www
+   mv phpMyAdmin-5.2.2-all-languages /var/www/phpmyadmin
    mv drupal-11.1.1 /var/www/drupal
    ```
 
 ### Настройка базы данных
-```sh
-mysql -u root
-CREATE DATABASE drupal_db;
-CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON drupal_db.* TO 'user'@'localhost';
-FLUSH PRIVILEGES;
-EXIT;
-```
+
+   Создаю через командную строку для CMS базу данных drupal_db и пользователя базы данных с вашим именем!!!!!!!!!!!!
+
+   ```sh
+   mysql -u root
+   CREATE DATABASE drupal_db;
+   CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';
+   GRANT ALL PRIVILEGES ON drupal_db.* TO 'user'@'localhost';
+   FLUSH PRIVILEGES;
+   EXIT;
+   ```
 
 ### Настройка виртуальных хостов Apache
 1. Созданы файлы конфигурации:
